@@ -35,18 +35,18 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 
 **4. 回到小程序开发环境，编辑 `app.json` ，添加插件声明，最新版为 `1.1.0`**
 
-    	"plugins": {
-    		"htmltowxml": {
-    			"version": "1.1.0",
-    			"provider": "wxa51b9c855ae38f3c"
-    		}
+    "plugins": {
+    	"htmltowxml": {
+    		"version": "1.1.0",
+    		"provider": "wxa51b9c855ae38f3c"
     	}
+    }
 
 **5. 在对应页面的 `json` 文件，比如首页 `index.json`，添加使用插件组件的声明**
 
-    	"usingComponents": {
-    		"htmltowxml": "plugin://htmltowxml/view"
-    	}
+    "usingComponents": {
+    	"htmltowxml": "plugin://htmltowxml/view"
+    }
 
 **6. 参考下面组件使用方法**
 
@@ -56,9 +56,9 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 
 **2. 在对应页面的 `json` 文件，比如首页 `index.json`，添加使用组件的声明，注意路径**
 
-    	"usingComponents": {
-    		"htmltowxml": "path/to/html2wxml-component/html2wxml"
-    	}
+    "usingComponents": {
+    	"htmltowxml": "path/to/html2wxml-component/html2wxml"
+    }
 
 ### 组件使用（适用于插件版本和组件版本）
 
@@ -94,3 +94,6 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
     
     // 直接渲染Page中的已经过解析的obj数据
     <htmltowxml json="{{obj}}" bindWxmlTagATap="wxmlTagATap" />
+
+## 来源
+QwqOffice软件工作室 [https://www.qwqoffice.com/](https://www.qwqoffice.com/ "https://www.qwqoffice.com/")
