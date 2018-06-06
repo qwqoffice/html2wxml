@@ -97,3 +97,7 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 
 ## 来源
 QwqOffice软件工作室 [https://www.qwqoffice.com/](https://www.qwqoffice.com/ "https://www.qwqoffice.com/")
+
+QwqOffice官网小程序（文章详情页富文本解析由 `html2wxml` 提供）
+
+![QwqOffice小程序](https://www.qwqoffice.com/html2wxml/images/qwqoffice-qrcode.jpg "QwqOffice小程序")
