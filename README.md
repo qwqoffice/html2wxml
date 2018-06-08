@@ -33,11 +33,11 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 **3. 添加成功**
 ![添加小程序插件](https://www.qwqoffice.com/html2wxml/images/plugin-3.png "添加小程序插件")
 
-**4. 回到小程序开发环境，编辑 `app.json` ，添加插件声明，最新版为 `1.1.0`**
+**4. 回到小程序开发环境，编辑 `app.json` ，添加插件声明，最新版为 `1.2.0`**
 
     "plugins": {
     	"htmltowxml": {
-    		"version": "1.1.0",
+    		"version": "1.2.0",
     		"provider": "wxa51b9c855ae38f3c"
     	}
     }
