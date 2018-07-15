@@ -71,6 +71,7 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 | type | String | html  | 要渲染的文本类型，可用值`html`,`markdown`,`md` |
 | highlight | Boolean | true | 是否对`pre`内文本进行代码高亮 |
 | highlightStyle | String | darcula | `pre`代码高亮样式，可用值`default`,`darcula`,`dracula`,`tomorrow` |
+| highlightLanguages | Array | ['html', 'js', 'css', 'php'] | `pre`代码高亮检测语言，可用值稍后放出 |
 | linenums | Boolean | true | 是否为`pre`添加行号显示 |
 | padding | Number | 5 | `html2wxml`组件与屏幕边缘的单边距离，用于图片自适应 |
 | imghost | String | null | 对`img`标签中`src`属性可能的相对路径进行域名补全 |
@@ -89,6 +90,9 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
     
     // 代码高亮样式改为tomorrow
     <htmltowxml text="{{content}}" highlightStyle="tomorrow" bindWxmlTagATap="wxmlTagATap" />
+    
+	// 设置代码高亮检测语言 (最多6个，自行搭建服务不受限制)
+	<htmltowxml text="{{content}}" highlightLanguages="{{['html','js','php','css','cpp','ruby']}}" bindWxmlTagATap="wxmlTagATap" />
     
     // 对HTML数据中的img标签的相对路径补全域名
     <htmltowxml text="{{content}}" imghost="https://www.qwqoffice.com" bindWxmlTagATap="wxmlTagATap" />
