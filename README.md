@@ -132,6 +132,7 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 富文本的解析是由QwqOffice完成，存在不稳定因素，你可以自行搭建解析服务或将解析组件引入到你的项目中。
 
 **1. 复制整个 `html2wxml-php` 文件夹到项目目录中**
+
 **2. 引入类文件`class.ToWXML.php`**
     
     include( 'path/to/html2wxml-php/class.ToWXML.php' );
