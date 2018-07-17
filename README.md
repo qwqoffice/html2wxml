@@ -37,11 +37,11 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 3. 添加成功
 ![添加小程序插件](https://www.qwqoffice.com/html2wxml/images/plugin-3.png "添加小程序插件")
 
-4. 回到小程序开发环境，编辑 `app.json` ，添加插件声明，最新版为 `1.2.0`
+4. 回到小程序开发环境，编辑 `app.json` ，添加插件声明，最新版为 `1.3.0`
 
 		"plugins": {
 			"htmltowxml": {
-				"version": "1.2.0",
+				"version": "1.3.0",
 				"provider": "wxa51b9c855ae38f3c"
 			}
 		}
@@ -96,7 +96,7 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 | type | String | html  | 要渲染的文本类型，可用值`html`,`markdown`,`md` |
 | highlight | Boolean | true | 是否对`pre`内文本进行代码高亮 |
 | highlightStyle | String | darcula | `pre`代码高亮样式，可用值`default`,`darcula`,`dracula`,`tomorrow` |
-| highlightLanguages | Array | ['html', 'js', 'css', 'php'] | `pre`代码高亮检测语言，可用值稍后放出 |
+| highlightLanguages | Array | ['html', 'js', 'css', 'php'] | `pre`代码高亮检测语言。[查看可用语言](#可用的代码高亮语言) |
 | linenums | Boolean | true | 是否为`pre`添加行号显示 |
 | padding | Number | 5 | `html2wxml`组件与屏幕边缘的单边距离，用于图片自适应 |
 | imghost | String | null | 对`img`标签中`src`属性可能的相对路径进行域名补全 |
@@ -168,10 +168,193 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 | :------------ | :------------ | :------------ | :------------ |
 | type | String | html  | 要渲染的文本类型，可用值`html`,`markdown`,`md` |
 | highlight | Boolean | true | 是否对`pre`内文本进行代码高亮 |
-| highlight_languages | Array | ['html', 'js', 'css', 'php'] | `pre`代码高亮检测语言，可用值稍后放出 |
+| highlight_languages | Array | ['html', 'js', 'css', 'php'] | `pre`代码高亮检测语言。[查看可用语言](#可用的代码高亮语言) |
 | linenums | Boolean | true | 是否为`pre`添加行号显示 |
 | imghost | String | null | 对`img`标签中`src`属性可能的相对路径进行域名补全 |
 | encode | Boolean | true | 是否对结果进行JSON编码 |
+
+## 可用的代码高亮语言
+
+语言名称和别名均可使用
+
+| 语言名称 | 别名 |
+| :------------ | :------------ |
+| 1c | |
+| abnf | |
+| accesslog | |
+| actionscript | as |
+| ada | |
+| apache | apacheconf |
+| applescript | osascript |
+| arduino | |
+| armasm | arm |
+| asciidoc | adoc |
+| aspectj | |
+| autohotkey | ahk |
+| autoit | |
+| avrasm | |
+| awk | |
+| axapta | |
+| bash | sh,zsh |
+| basic | |
+| bnf | |
+| brainfuck | bf |
+| cal | |
+| capnproto | capnp |
+| ceylon | |
+| clean | clean,icl,dcl |
+| clojure-repl | |
+| clojure | clj |
+| cmake | cmake.in |
+| coffeescript | coffee,cson,iced |
+| coq | |
+| cos | cos,cls |
+| cpp | c,cc,h,c++,h++,hpp |
+| crmsh | crm,pcmk |
+| crystal | cr |
+| cs | csharp |
+| csp | |
+| css | |
+| d | |
+| dart | |
+| delphi | dpr,dfm,pas,pascal,freepascal,lazarus,lpr,lfm |
+| diff | patch |
+| django | jinja |
+| dns | bind,zone |
+| dockerfile | docker |
+| dos | bat,cmd |
+| dsconfig | |
+| dts | |
+| dust | dst |
+| ebnf | |
+| elixir | |
+| elm | |
+| erb | |
+| erlang-repl | |
+| erlang | erl |
+| excel | xlsx,xls |
+| fix | |
+| flix | |
+| fortran | f90,f95 |
+| fsharp | fs |
+| gams | gms |
+| gauss | gss |
+| gcode | nc |
+| gherkin | feature |
+| glsl | |
+| go | golang |
+| golo | |
+| gradle | |
+| groovy | |
+| haml | |
+| handlebars | hbs,html.hbs,html.handlebars |
+| haskell | hs |
+| haxe | hx |
+| hsp | |
+| htmlbars | |
+| http | https |
+| hy | hylang |
+| inform7 | i7 |
+| ini | toml |
+| irpf90 | |
+| java | jsp |
+| javascript | js,jsx |
+| jboss-cli | wildfly-cli |
+| json | |
+| julia-repl | |
+| julia | |
+| kotlin | |
+| lasso | ls,lassoscript |
+| ldif | |
+| leaf | |
+| less | |
+| lisp | |
+| livecodeserver | |
+| livescript | ls |
+| llvm | |
+| lsl | |
+| lua | |
+| makefile | mk,mak |
+| markdown | md,mkdown,mkd |
+| mathematica | mma |
+| matlab | |
+| maxima | |
+| mel | |
+| mercury | m,moo |
+| mipsasm | mips |
+| mizar | |
+| mojolicious | |
+| monkey | |
+| moonscript | moon |
+| n1ql | |
+| nginx | nginxconf |
+| nimrod | nim |
+| nix | nixos |
+| nsis | |
+| objectivec | mm,objc,obj-c |
+| ocaml | ml |
+| openscad | scad |
+| oxygene | |
+| parser3 | |
+| perl | pl,pm |
+| pf | pf.conf |
+| php | php3,php4,php5,php6 |
+| pony | |
+| powershell | ps |
+| processing | |
+| profile | |
+| prolog | |
+| protobuf | |
+| puppet | pp |
+| purebasic | pb,pbi |
+| python | py,gyp |
+| q | k,kdb |
+| qml | qt |
+| r | |
+| rib | |
+| roboconf | graph,instances |
+| routeros | routeros,mikrotik |
+| rsl | |
+| ruby | rb,gemspec,podspec,thor,irb |
+| ruleslanguage | |
+| rust | rs |
+| scala | |
+| scheme | |
+| scilab | sci |
+| scss | |
+| shell | console |
+| smali | smali |
+| smalltalk | st |
+| sml | ml |
+| sqf | sqf |
+| sql | |
+| stan | |
+| stata | do,ado |
+| step21 | p21,step,stp |
+| stylus | styl |
+| subunit | |
+| swift | |
+| taggerscript | |
+| tap | |
+| tcl | tk |
+| tex | |
+| thrift | |
+| tp | |
+| twig | craftcms |
+| typescript | ts |
+| vala | |
+| vbnet | vb |
+| vbscript-html | |
+| vbscript | vbs |
+| verilog | v,sv,svh |
+| vhdl | |
+| vim | |
+| x86asm | |
+| xl | tao |
+| xml | html,xhtml,rss,atom,xjb,xsd,xsl,plist |
+| xquery | xpath,xq |
+| yaml | yml,YAML,yaml |
+| zephir | zep |
 
 ## 来源
 QwqOffice软件工作室 [https://www.qwqoffice.com/](https://www.qwqoffice.com/ "https://www.qwqoffice.com/")
