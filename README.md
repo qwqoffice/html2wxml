@@ -28,16 +28,16 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 
 ### 插件版本准备
 
-**1. 打开小程序管理后台，转到设置 - 第三方服务，点击添加插件**
+1. 打开小程序管理后台，转到设置 - 第三方服务，点击添加插件
 ![添加小程序插件](https://www.qwqoffice.com/html2wxml/images/plugin-1.png "添加小程序插件")
 
-**2. 搜索 `html2wxml` ，选中并添加**
+2. 搜索 `html2wxml` ，选中并添加
 ![添加小程序插件](https://www.qwqoffice.com/html2wxml/images/plugin-2.png "添加小程序插件")
 
-**3. 添加成功**
+3. 添加成功
 ![添加小程序插件](https://www.qwqoffice.com/html2wxml/images/plugin-3.png "添加小程序插件")
 
-**4. 回到小程序开发环境，编辑 `app.json` ，添加插件声明，最新版为 `1.2.0`**
+4. 回到小程序开发环境，编辑 `app.json` ，添加插件声明，最新版为 `1.2.0`
 
     "plugins": {
     	"htmltowxml": {
@@ -46,40 +46,40 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
     	}
     }
 
-**5. 在对应页面的 `json` 文件，比如首页 `index.json`，添加使用插件组件的声明**
+5. 在对应页面的 `json` 文件，比如首页 `index.json`，添加使用插件组件的声明
 
     "usingComponents": {
     	"htmltowxml": "plugin://htmltowxml/view"
     }
 
-**6. 参考下面组件使用方法**
+6. 参考下面组件使用方法
 
 ### 组件版本准备
 
-**1. 复制整个 `html2wxml-component` 文件夹到小程序目录**
+1. 复制整个 `html2wxml-component` 文件夹到小程序目录
 
-**2. 在对应页面的 `json` 文件，比如首页 `index.json`，添加使用组件的声明，注意路径**
+2. 在对应页面的 `json` 文件，比如首页 `index.json`，添加使用组件的声明，注意路径
 
     "usingComponents": {
     	"htmltowxml": "path/to/html2wxml-component/html2wxml"
     }
-**3. 参考下面组件使用方法**
+3. 参考下面组件使用方法
 
 ### 模板版本准备
 
-**1. 复制整个 `html2wxml-template` 文件夹到小程序目录**
+1. 复制整个 `html2wxml-template` 文件夹到小程序目录
 
-**2. 在对应页面的 `js` 文件，比如首页 `index.js`，添加引用声明，并使用`html2wxml`方法进行数据绑定，注意路径，参数分别为绑定的数据名、已解析的富文本数据、当前页面对象和容器与屏幕边缘的单边的距离**
+2. 在对应页面的 `js` 文件，比如首页 `index.js`，添加引用声明，并使用`html2wxml`方法进行数据绑定，注意路径，参数分别为绑定的数据名、已解析的富文本数据、当前页面对象和容器与屏幕边缘的单边的距离
 
     var html2wxml = require('path/to/html2wxml-template/html2wxml.js');
     html2wxml.html2wxml('article', res.data, this, 5);
 
-**3. 在对应页面的 `wxml` 文件，比如首页 `index.wxml`，添加引用模板的声明，并使用模板，注意路径和绑定的数据名**
+3. 在对应页面的 `wxml` 文件，比如首页 `index.wxml`，添加引用模板的声明，并使用模板，注意路径和绑定的数据名
 
     <import src="path/to/html2wxml-template/html2wxml.wxml" />
     <template is="html2wxml" data="{{wxmlData:article}}" />
 
-**4.  在对应页面的 `wxss` 文件，比如首页 `index.wxss`或`app.wxss`， 引入样式表和你喜欢的代码高亮样式，注意路径**
+4.  在对应页面的 `wxss` 文件，比如首页 `index.wxss`或`app.wxss`， 引入样式表和你喜欢的代码高亮样式，注意路径
 
     @import "path/to/html2wxml-template/html2wxml.wxss";
     @import "path/to/html2wxml-template/highlight-styles/darcula.wxss";
@@ -99,6 +99,7 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 | linenums | Boolean | true | 是否为`pre`添加行号显示 |
 | padding | Number | 5 | `html2wxml`组件与屏幕边缘的单边距离，用于图片自适应 |
 | imghost | String | null | 对`img`标签中`src`属性可能的相对路径进行域名补全 |
+| showLoading | Boolean | true | 是否显示加载中动画 |
 | bindWxmlTagATap | Handler |  | 点击`a`标签的回调 |
 
 #### 示例
@@ -120,6 +121,9 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
     
     // 对HTML数据中的img标签的相对路径补全域名
     <htmltowxml text="{{content}}" imghost="https://www.qwqoffice.com" bindWxmlTagATap="wxmlTagATap" />
+	
+	// 禁用加载中动画
+    <htmltowxml text="{{content}}" showLoading="{{false}}" bindWxmlTagATap="wxmlTagATap" />
     
     // 将Page中的text数据作为Markdown格式渲染
     <htmltowxml text="{{text}}" type="md" bindWxmlTagATap="wxmlTagATap" />
@@ -129,14 +133,14 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 
 ## 服务端用法
 
-富文本的解析是由QwqOffice完成，存在不稳定因素，你可以自行搭建解析服务或将解析组件引入到你的项目中。
+富文本的解析默认是由QwqOffice完成，存在不稳定因素，你可以自行搭建解析服务或将解析组件引入到你的项目中。
 
-**1. 复制整个 `html2wxml-php` 文件夹到项目目录中**
+1. 复制整个 `html2wxml-php` 文件夹到项目目录中
 
-**2. 引入类文件`class.ToWXML.php`**
+2. 引入类文件`class.ToWXML.php`
     
     include( 'path/to/html2wxml-php/class.ToWXML.php' );
-**3. 实例化`html2wxml`，进行解析并输出，示例：**
+3. 实例化`html2wxml`，进行解析并输出，示例：
 
 	$towxml = new ToWXML();
 	$json = $towxml->towxml( '<h1>H1标题</h1>', array(
