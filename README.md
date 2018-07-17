@@ -39,18 +39,18 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 
 4. 回到小程序开发环境，编辑 `app.json` ，添加插件声明，最新版为 `1.2.0`
 
-    "plugins": {
-    	"htmltowxml": {
-    		"version": "1.2.0",
-    		"provider": "wxa51b9c855ae38f3c"
-    	}
-    }
+		"plugins": {
+			"htmltowxml": {
+				"version": "1.2.0",
+				"provider": "wxa51b9c855ae38f3c"
+			}
+		}
 
 5. 在对应页面的 `json` 文件，比如首页 `index.json`，添加使用插件组件的声明
 
-    "usingComponents": {
-    	"htmltowxml": "plugin://htmltowxml/view"
-    }
+		"usingComponents": {
+			"htmltowxml": "plugin://htmltowxml/view"
+		}
 
 6. 参考下面组件使用方法
 
@@ -60,9 +60,10 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 
 2. 在对应页面的 `json` 文件，比如首页 `index.json`，添加使用组件的声明，注意路径
 
-    "usingComponents": {
-    	"htmltowxml": "path/to/html2wxml-component/html2wxml"
-    }
+		"usingComponents": {
+			"htmltowxml": "path/to/html2wxml-component/html2wxml"
+		}
+
 3. 参考下面组件使用方法
 
 ### 模板版本准备
@@ -71,18 +72,18 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 
 2. 在对应页面的 `js` 文件，比如首页 `index.js`，添加引用声明，并使用`html2wxml`方法进行数据绑定，注意路径，参数分别为绑定的数据名、已解析的富文本数据、当前页面对象和容器与屏幕边缘的单边的距离
 
-    var html2wxml = require('path/to/html2wxml-template/html2wxml.js');
-    html2wxml.html2wxml('article', res.data, this, 5);
+		var html2wxml = require('path/to/html2wxml-template/html2wxml.js');
+		html2wxml.html2wxml('article', res.data, this, 5);
 
 3. 在对应页面的 `wxml` 文件，比如首页 `index.wxml`，添加引用模板的声明，并使用模板，注意路径和绑定的数据名
 
-    <import src="path/to/html2wxml-template/html2wxml.wxml" />
-    <template is="html2wxml" data="{{wxmlData:article}}" />
+		<import src="path/to/html2wxml-template/html2wxml.wxml" />
+		<template is="html2wxml" data="{{wxmlData:article}}" />
 
 4.  在对应页面的 `wxss` 文件，比如首页 `index.wxss`或`app.wxss`， 引入样式表和你喜欢的代码高亮样式，注意路径
 
-    @import "path/to/html2wxml-template/html2wxml.wxss";
-    @import "path/to/html2wxml-template/highlight-styles/darcula.wxss";
+		@import "path/to/html2wxml-template/html2wxml.wxss";
+		@import "path/to/html2wxml-template/highlight-styles/darcula.wxss";
 
 ### 组件使用方法（仅适用于插件版本和组件版本）
 
@@ -105,31 +106,31 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 #### 示例
 
     // 将Page中的content数据作为HTML格式渲染
-    <htmltowxml text="{{content}}" bindWxmlTagATap="wxmlTagATap" />
+    <htmltowxml text="{{content}}" bindWxmlTagATap="wxmlTagATap" ></htmltowxml>
     
     // 禁用代码高亮功能
-    <htmltowxml text="{{content}}" highlight="{{false}}" bindWxmlTagATap="wxmlTagATap" />
+    <htmltowxml text="{{content}}" highlight="{{false}}" bindWxmlTagATap="wxmlTagATap" ></htmltowxml>
     
     // 禁用代码行号显示功能
-    <htmltowxml text="{{content}}" linenums="{{false}}" bindWxmlTagATap="wxmlTagATap" />
+    <htmltowxml text="{{content}}" linenums="{{false}}" bindWxmlTagATap="wxmlTagATap" ></htmltowxml>
     
     // 代码高亮样式改为tomorrow
-    <htmltowxml text="{{content}}" highlightStyle="tomorrow" bindWxmlTagATap="wxmlTagATap" />
+    <htmltowxml text="{{content}}" highlightStyle="tomorrow" bindWxmlTagATap="wxmlTagATap" ></htmltowxml>
     
-	// 设置代码高亮检测语言 (最多6个，自行搭建服务不受限制)
-	<htmltowxml text="{{content}}" highlightLanguages="{{['html','js','php','css','cpp','ruby']}}" bindWxmlTagATap="wxmlTagATap" />
+    // 设置代码高亮检测语言 (最多6个，自行搭建服务不受限制)
+    <htmltowxml text="{{content}}" highlightLanguages="{{['html','js','php','css','cpp','ruby']}}" bindWxmlTagATap="wxmlTagATap" ></htmltowxml>
     
     // 对HTML数据中的img标签的相对路径补全域名
-    <htmltowxml text="{{content}}" imghost="https://www.qwqoffice.com" bindWxmlTagATap="wxmlTagATap" />
-	
-	// 禁用加载中动画
-    <htmltowxml text="{{content}}" showLoading="{{false}}" bindWxmlTagATap="wxmlTagATap" />
+    <htmltowxml text="{{content}}" imghost="https://www.qwqoffice.com" bindWxmlTagATap="wxmlTagATap" ></htmltowxml>
+    
+    // 禁用加载中动画
+    <htmltowxml text="{{content}}" showLoading="{{false}}" bindWxmlTagATap="wxmlTagATap" ></htmltowxml>
     
     // 将Page中的text数据作为Markdown格式渲染
-    <htmltowxml text="{{text}}" type="md" bindWxmlTagATap="wxmlTagATap" />
+    <htmltowxml text="{{text}}" type="md" bindWxmlTagATap="wxmlTagATap" ></htmltowxml>
     
     // 直接渲染Page中的已经过解析的obj数据
-    <htmltowxml json="{{obj}}" bindWxmlTagATap="wxmlTagATap" />
+    <htmltowxml json="{{obj}}" bindWxmlTagATap="wxmlTagATap" ></htmltowxml>
 
 ## 服务端用法
 
@@ -138,20 +139,21 @@ PHP编写的Markdown解析器 [https://github.com/erusev/parsedown](https://gith
 1. 复制整个 `html2wxml-php` 文件夹到项目目录中
 
 2. 引入类文件`class.ToWXML.php`
-    
-    include( 'path/to/html2wxml-php/class.ToWXML.php' );
+
+		include( 'path/to/html2wxml-php/class.ToWXML.php' );
+
 3. 实例化`html2wxml`，进行解析并输出，示例：
 
-	$towxml = new ToWXML();
-	$json = $towxml->towxml( '<h1>H1标题</h1>', array(
-		'type' => 'html',
-		'highlight' => true,
-		'linenums' => true,
-		'imghost' => null,
-		'encode' => false,
-		'highlight_languages' => array( 'html', 'js', 'php', 'css' )
-	) );
-	echo json_encode( $json, JSON_UNESCAPED_UNICODE );
+		$towxml = new ToWXML();
+		$json = $towxml->towxml( '<h1>H1标题</h1>', array(
+			'type' => 'html',
+			'highlight' => true,
+			'linenums' => true,
+			'imghost' => null,
+			'encode' => false,
+			'highlight_languages' => array( 'html', 'js', 'php', 'css' )
+		) );
+		echo json_encode( $json, JSON_UNESCAPED_UNICODE );
 
 ### 参数介绍
 
