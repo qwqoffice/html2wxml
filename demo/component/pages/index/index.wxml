@@ -1,0 +1,2 @@
+<htmltowxml text="{{html}}" bindWxmlTagATap="wxmlTagATap" />
+<!--<htmltowxml json="{{json}}" bindWxmlTagATap="wxmlTagATap" />-->

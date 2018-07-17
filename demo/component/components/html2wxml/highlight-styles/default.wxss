@@ -1,0 +1,94 @@
+/*
+
+Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
+
+*/
+
+.hljs-style-default .hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    background: #fafafa;
+}
+
+/* Base color: saturation 0; */
+
+.hljs-style-default .hljs,
+.hljs-style-default .hljs-subst {
+    color: #444;
+}
+
+.hljs-style-default .hljs-comment {
+    color: #888;
+}
+
+.hljs-style-default .hljs-keyword,
+.hljs-style-default .hljs-attribute,
+.hljs-style-default .hljs-selector-tag,
+.hljs-style-default .hljs-meta-keyword,
+.hljs-style-default .hljs-doctag,
+.hljs-style-default .hljs-name {
+    font-weight: bold;
+}
+
+/* User color: hue: 0 */
+
+.hljs-style-default .hljs-type,
+.hljs-style-default .hljs-string,
+.hljs-style-default .hljs-number,
+.hljs-style-default .hljs-selector-id,
+.hljs-style-default .hljs-selector-class,
+.hljs-style-default .hljs-quote,
+.hljs-style-default .hljs-template-tag,
+.hljs-style-default .hljs-deletion {
+    color: #800;
+}
+
+.hljs-style-default .hljs-title,
+.hljs-style-default .hljs-section {
+    color: #800;
+    font-weight: bold;
+}
+
+.hljs-style-default .hljs-regexp,
+.hljs-style-default .hljs-symbol
+.hljs-style-default .hljs-variable,
+.hljs-style-default .hljs-template-variable
+.hljs-style-default .hljs-link,
+.hljs-style-default .hljs-selector-attr,
+.hljs-style-default .hljs-selector-pseudo {
+    color: #bc6060;
+}
+
+/* Language color: hue: 90; */
+
+.hljs-style-default .hljs-literal {
+    color: #78a960;
+}
+
+.hljs-style-default .hljs-built_in,
+.hljs-style-default .hljs-bullet
+.hljs-style-default .hljs-code
+.hljs-style-default .hljs-addition {
+    color: #397300;
+}
+
+/* Meta color: hue: 200 */
+
+.hljs-style-default .hljs-meta {
+    color: #1f7199;
+}
+
+.hljs-style-default .hljs-meta-string {
+    color: #4d99bf;
+}
+
+/* Misc effects */
+
+.hljs-style-default .hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-style-default .hljs-strong {
+    font-weight: bold;
+}

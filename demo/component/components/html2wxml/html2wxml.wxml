@@ -1,0 +1,870 @@
+<!--**
+ * Project: html2wxml
+ * Description: 将HTML、Markdown转为微信小程序WXML 
+ * Author: 幻想小籽
+ * Organization: QwqOffice (https://www.qwqoffice.com)
+ */-->
+
+<!-- 基础元素 -->
+
+<template name="wxmlVideo">
+    <view class="{{item.attr.class}} wxml-video" style="{{item.attr.style}}">
+        <video class="{{item.attr.class}}" src="{{item.attr.src}}" controls="{{item.attr.controls != undefined ? true : false}}" loop="{{item.attr.loop != undefined ? true : false}}" poster="{{item.attr.poster}}"></video>
+    </view>
+</template>
+
+<template name="wxmlAudio">
+    <view class="{{item.attr.class}} wxml-audio" style="{{item.attr.style}}">
+        <audio class="{{item.attr.class}}" src="{{item.attr.src}}" controls="{{item.attr.controls != undefined ? true : false}}" loop="{{item.attr.loop != undefined ? true : false}}" poster="{{item.attr.poster}}" name="{{item.attr.name}}" author="{{item.attr.author}}"></audio>
+    </view>
+</template>
+
+<template name="wxmlImg">
+    <image class="{{item.attr.class}} wxml-img" data-src="{{item.attr.src}}" src="{{item.attr.src}}" data-idx="{{item.idx}}" bindload="wxmlImgLoad" bindtap="wxmlImgTap" mode="widthFix" style="width:{{images[item.idx].width}}px;" />
+</template>
+
+<template name="wxmlLiType">
+    <view class="wxml-li-type">
+        <view class="{{item.attr.class}} {{type != 'number' ? 'wxml-li-' + type : ''}}">{{type === 'number' ? idx + 1 + '. ' : ''}}</view>
+    </view>
+</template>
+
+<!-- 入口 -->
+
+<view class="html2wxml hljs-style-{{highlightStyle}}">
+    <block wx:if="{{nodes == undefined}}">
+        <view wx:if="{{showLoading}}" style="padding:20px 0;width:100%;display:flex;justify-content:center;align-items:center">
+            <image class="loading" src="./images/loading.png"></image>
+        </view>
+    </block>
+    <block wx:else>
+        <block wx:for="{{nodes}}" wx:key="">
+            <template is="wxml0" data="{{images:images, item:item}}" />
+        </block>
+    </block>
+</view>
+
+<!-- 循环模版 -->
+
+<template name="wxml0">
+    <!-- button 类型 -->
+    <block wx:if="{{item.tag == 'button'}}">
+        <button type="default" size="mini">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml1" data="{{images:images, item:item}}" />
+            </block>
+        </button>
+    </block>
+    <!-- ul类型 -->
+    <block wx:elif="{{item.tag == 'ul'}}">
+        <view class="{{item.attr.class}} wxml-ul wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml1" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'circle'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- ol类型 -->
+    <block wx:elif="{{item.tag == 'ol'}}">
+        <view class="{{item.attr.class}} wxml-ol wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml1" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'number'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- li类型 -->
+    <block wx:elif="{{item.tag == 'li'}}">
+        <view class="{{item.attr.class}} wxml-li" style="{{item.attr.style}}">
+            <template is="wxmlLiType" data="{{item:item, idx:item.idx, type:type}}" />
+            <view class="{{item.attr.class}} wxml-li-text">
+                <block wx:for="{{item.nodes}}" wx:key="">
+                    <template is="wxml1" data="{{images:images, item:item}}" />
+                </block>
+            </view>
+        </view>
+    </block>
+    <!-- a类型 -->
+    <block wx:elif="{{item.tag == 'a'}}">
+        <view bindtap="wxmlTagATap" class="wxml-inline {{item.attr.class}} wxml-a" data-src="{{item.attr.href}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml1" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+    <!-- video类型 -->
+    <block wx:elif="{{item.tag == 'video'}}">
+        <template is="wxmlVideo" data="{{item:item}}" />
+    </block>
+    <!-- audio类型 -->
+    <block wx:elif="{{item.tag == 'audio'}}">
+        <template is="wxmlAudio" data="{{item:item}}" />
+    </block>
+    <!-- img类型 -->
+    <block wx:elif="{{item.tag == 'img'}}">
+        <template is="wxmlImg" data="{{images:images, item:item}}" />
+    </block>
+    <!-- 纯文本类型 -->
+    <block wx:elif="{{item.tag == '#text'}}">
+        <text>{{item.text}}</text>
+    </block>
+    <block wx:elif="{{item.tag == 'br'}}">
+        <text>\n</text>
+    </block>
+    <!-- 其他类型 -->
+    <block wx:else>
+        <view class="{{item.attr.class}} wxml-{{item.tag}} wxml-{{item.type}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml1" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+</template>
+
+<!-- 循环模版 -->
+
+<template name="wxml1">
+    <!-- button 类型 -->
+    <block wx:if="{{item.tag == 'button'}}">
+        <button type="default" size="mini">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml2" data="{{images:images, item:item}}" />
+            </block>
+        </button>
+    </block>
+    <!-- ul类型 -->
+    <block wx:elif="{{item.tag == 'ul'}}">
+        <view class="{{item.attr.class}} wxml-ul wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml2" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'circle'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- ol类型 -->
+    <block wx:elif="{{item.tag == 'ol'}}">
+        <view class="{{item.attr.class}} wxml-ol wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml2" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'number'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- li类型 -->
+    <block wx:elif="{{item.tag == 'li'}}">
+        <view class="{{item.attr.class}} wxml-li" style="{{item.attr.style}}">
+            <template is="wxmlLiType" data="{{item:item, idx:item.idx, type:type}}" />
+            <view class="{{item.attr.class}} wxml-li-text">
+                <block wx:for="{{item.nodes}}" wx:key="">
+                    <template is="wxml2" data="{{images:images, item:item}}" />
+                </block>
+            </view>
+        </view>
+    </block>
+    <!-- a类型 -->
+    <block wx:elif="{{item.tag == 'a'}}">
+        <view bindtap="wxmlTagATap" class="wxml-inline {{item.attr.class}} wxml-a" data-src="{{item.attr.href}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml2" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+    <!-- video类型 -->
+    <block wx:elif="{{item.tag == 'video'}}">
+        <template is="wxmlVideo" data="{{item:item}}" />
+    </block>
+    <!-- audio类型 -->
+    <block wx:elif="{{item.tag == 'audio'}}">
+        <template is="wxmlAudio" data="{{item:item}}" />
+    </block>
+    <!-- img类型 -->
+    <block wx:elif="{{item.tag == 'img'}}">
+        <template is="wxmlImg" data="{{images:images, item:item}}" />
+    </block>
+    <!-- 纯文本类型 -->
+    <block wx:elif="{{item.tag == '#text'}}">
+        <text>{{item.text}}</text>
+    </block>
+    <block wx:elif="{{item.tag == 'br'}}">
+        <text>\n</text>
+    </block>
+    <!-- 其他类型 -->
+    <block wx:else>
+        <view class="{{item.attr.class}} wxml-{{item.tag}} wxml-{{item.type}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml2" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+</template>
+
+<!-- 循环模版 -->
+
+<template name="wxml2">
+    <!-- button 类型 -->
+    <block wx:if="{{item.tag == 'button'}}">
+        <button type="default" size="mini">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml3" data="{{images:images, item:item}}" />
+            </block>
+        </button>
+    </block>
+    <!-- ul类型 -->
+    <block wx:elif="{{item.tag == 'ul'}}">
+        <view class="{{item.attr.class}} wxml-ul wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml3" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'circle'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- ol类型 -->
+    <block wx:elif="{{item.tag == 'ol'}}">
+        <view class="{{item.attr.class}} wxml-ol wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml3" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'number'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- li类型 -->
+    <block wx:elif="{{item.tag == 'li'}}">
+        <view class="{{item.attr.class}} wxml-li" style="{{item.attr.style}}">
+            <template is="wxmlLiType" data="{{item:item, idx:item.idx, type:type}}" />
+            <view class="{{item.attr.class}} wxml-li-text">
+                <block wx:for="{{item.nodes}}" wx:key="">
+                    <template is="wxml3" data="{{images:images, item:item}}" />
+                </block>
+            </view>
+        </view>
+    </block>
+    <!-- a类型 -->
+    <block wx:elif="{{item.tag == 'a'}}">
+        <view bindtap="wxmlTagATap" class="wxml-inline {{item.attr.class}} wxml-a" data-src="{{item.attr.href}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml3" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+    <!-- video类型 -->
+    <block wx:elif="{{item.tag == 'video'}}">
+        <template is="wxmlVideo" data="{{item:item}}" />
+    </block>
+    <!-- audio类型 -->
+    <block wx:elif="{{item.tag == 'audio'}}">
+        <template is="wxmlAudio" data="{{item:item}}" />
+    </block>
+    <!-- img类型 -->
+    <block wx:elif="{{item.tag == 'img'}}">
+        <template is="wxmlImg" data="{{images:images, item:item}}" />
+    </block>
+    <!-- 纯文本类型 -->
+    <block wx:elif="{{item.tag == '#text'}}">
+        <text>{{item.text}}</text>
+    </block>
+    <block wx:elif="{{item.tag == 'br'}}">
+        <text>\n</text>
+    </block>
+    <!-- 其他类型 -->
+    <block wx:else>
+        <view class="{{item.attr.class}} wxml-{{item.tag}} wxml-{{item.type}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml3" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+</template>
+
+<!-- 循环模版 -->
+
+<template name="wxml3">
+    <!-- button 类型 -->
+    <block wx:if="{{item.tag == 'button'}}">
+        <button type="default" size="mini">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml4" data="{{images:images, item:item}}" />
+            </block>
+        </button>
+    </block>
+    <!-- ul类型 -->
+    <block wx:elif="{{item.tag == 'ul'}}">
+        <view class="{{item.attr.class}} wxml-ul wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml4" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'circle'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- ol类型 -->
+    <block wx:elif="{{item.tag == 'ol'}}">
+        <view class="{{item.attr.class}} wxml-ol wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml4" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'number'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- li类型 -->
+    <block wx:elif="{{item.tag == 'li'}}">
+        <view class="{{item.attr.class}} wxml-li" style="{{item.attr.style}}">
+            <template is="wxmlLiType" data="{{item:item, idx:item.idx, type:type}}" />
+            <view class="{{item.attr.class}} wxml-li-text">
+                <block wx:for="{{item.nodes}}" wx:key="">
+                    <template is="wxml4" data="{{images:images, item:item}}" />
+                </block>
+            </view>
+        </view>
+    </block>
+    <!-- a类型 -->
+    <block wx:elif="{{item.tag == 'a'}}">
+        <view bindtap="wxmlTagATap" class="wxml-inline {{item.attr.class}} wxml-a" data-src="{{item.attr.href}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml4" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+    <!-- video类型 -->
+    <block wx:elif="{{item.tag == 'video'}}">
+        <template is="wxmlVideo" data="{{item:item}}" />
+    </block>
+    <!-- audio类型 -->
+    <block wx:elif="{{item.tag == 'audio'}}">
+        <template is="wxmlAudio" data="{{item:item}}" />
+    </block>
+    <!-- img类型 -->
+    <block wx:elif="{{item.tag == 'img'}}">
+        <template is="wxmlImg" data="{{images:images, item:item}}" />
+    </block>
+    <!-- 纯文本类型 -->
+    <block wx:elif="{{item.tag == '#text'}}">
+        <text>{{item.text}}</text>
+    </block>
+    <block wx:elif="{{item.tag == 'br'}}">
+        <text>\n</text>
+    </block>
+    <!-- 其他类型 -->
+    <block wx:else>
+        <view class="{{item.attr.class}} wxml-{{item.tag}} wxml-{{item.type}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml4" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+</template>
+
+<!-- 循环模版 -->
+
+<template name="wxml4">
+    <!-- button 类型 -->
+    <block wx:if="{{item.tag == 'button'}}">
+        <button type="default" size="mini">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml5" data="{{images:images, item:item}}" />
+            </block>
+        </button>
+    </block>
+    <!-- ul类型 -->
+    <block wx:elif="{{item.tag == 'ul'}}">
+        <view class="{{item.attr.class}} wxml-ul wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml5" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'circle'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- ol类型 -->
+    <block wx:elif="{{item.tag == 'ol'}}">
+        <view class="{{item.attr.class}} wxml-ol wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml5" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'number'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- li类型 -->
+    <block wx:elif="{{item.tag == 'li'}}">
+        <view class="{{item.attr.class}} wxml-li" style="{{item.attr.style}}">
+            <template is="wxmlLiType" data="{{item:item, idx:item.idx, type:type}}" />
+            <view class="{{item.attr.class}} wxml-li-text">
+                <block wx:for="{{item.nodes}}" wx:key="">
+                    <template is="wxml5" data="{{images:images, item:item}}" />
+                </block>
+            </view>
+        </view>
+    </block>
+    <!-- a类型 -->
+    <block wx:elif="{{item.tag == 'a'}}">
+        <view bindtap="wxmlTagATap" class="wxml-inline {{item.attr.class}} wxml-a" data-src="{{item.attr.href}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml5" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+    <!-- video类型 -->
+    <block wx:elif="{{item.tag == 'video'}}">
+        <template is="wxmlVideo" data="{{item:item}}" />
+    </block>
+    <!-- audio类型 -->
+    <block wx:elif="{{item.tag == 'audio'}}">
+        <template is="wxmlAudio" data="{{item:item}}" />
+    </block>
+    <!-- img类型 -->
+    <block wx:elif="{{item.tag == 'img'}}">
+        <template is="wxmlImg" data="{{images:images, item:item}}" />
+    </block>
+    <!-- 纯文本类型 -->
+    <block wx:elif="{{item.tag == '#text'}}">
+        <text>{{item.text}}</text>
+    </block>
+    <block wx:elif="{{item.tag == 'br'}}">
+        <text>\n</text>
+    </block>
+    <!-- 其他类型 -->
+    <block wx:else>
+        <view class="{{item.attr.class}} wxml-{{item.tag}} wxml-{{item.type}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml5" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+</template>
+
+<!-- 循环模版 -->
+
+<template name="wxml5">
+    <!-- button 类型 -->
+    <block wx:if="{{item.tag == 'button'}}">
+        <button type="default" size="mini">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml6" data="{{images:images, item:item}}" />
+            </block>
+        </button>
+    </block>
+    <!-- ul类型 -->
+    <block wx:elif="{{item.tag == 'ul'}}">
+        <view class="{{item.attr.class}} wxml-ul wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml6" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'circle'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- ol类型 -->
+    <block wx:elif="{{item.tag == 'ol'}}">
+        <view class="{{item.attr.class}} wxml-ol wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml6" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'number'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- li类型 -->
+    <block wx:elif="{{item.tag == 'li'}}">
+        <view class="{{item.attr.class}} wxml-li" style="{{item.attr.style}}">
+            <template is="wxmlLiType" data="{{item:item, idx:item.idx, type:type}}" />
+            <view class="{{item.attr.class}} wxml-li-text">
+                <block wx:for="{{item.nodes}}" wx:key="">
+                    <template is="wxml6" data="{{images:images, item:item}}" />
+                </block>
+            </view>
+        </view>
+    </block>
+    <!-- a类型 -->
+    <block wx:elif="{{item.tag == 'a'}}">
+        <view bindtap="wxmlTagATap" class="wxml-inline {{item.attr.class}} wxml-a" data-src="{{item.attr.href}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml6" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+    <!-- video类型 -->
+    <block wx:elif="{{item.tag == 'video'}}">
+        <template is="wxmlVideo" data="{{item:item}}" />
+    </block>
+    <!-- audio类型 -->
+    <block wx:elif="{{item.tag == 'audio'}}">
+        <template is="wxmlAudio" data="{{item:item}}" />
+    </block>
+    <!-- img类型 -->
+    <block wx:elif="{{item.tag == 'img'}}">
+        <template is="wxmlImg" data="{{images:images, item:item}}" />
+    </block>
+    <!-- 纯文本类型 -->
+    <block wx:elif="{{item.tag == '#text'}}">
+        <text>{{item.text}}</text>
+    </block>
+    <block wx:elif="{{item.tag == 'br'}}">
+        <text>\n</text>
+    </block>
+    <!-- 其他类型 -->
+    <block wx:else>
+        <view class="{{item.attr.class}} wxml-{{item.tag}} wxml-{{item.type}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml6" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+</template>
+
+<!-- 循环模版 -->
+
+<template name="wxml6">
+    <!-- button 类型 -->
+    <block wx:if="{{item.tag == 'button'}}">
+        <button type="default" size="mini">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml7" data="{{images:images, item:item}}" />
+            </block>
+        </button>
+    </block>
+    <!-- ul类型 -->
+    <block wx:elif="{{item.tag == 'ul'}}">
+        <view class="{{item.attr.class}} wxml-ul wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml7" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'circle'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- ol类型 -->
+    <block wx:elif="{{item.tag == 'ol'}}">
+        <view class="{{item.attr.class}} wxml-ol wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml7" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'number'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- li类型 -->
+    <block wx:elif="{{item.tag == 'li'}}">
+        <view class="{{item.attr.class}} wxml-li" style="{{item.attr.style}}">
+            <template is="wxmlLiType" data="{{item:item, idx:item.idx, type:type}}" />
+            <view class="{{item.attr.class}} wxml-li-text">
+                <block wx:for="{{item.nodes}}" wx:key="">
+                    <template is="wxml7" data="{{images:images, item:item}}" />
+                </block>
+            </view>
+        </view>
+    </block>
+    <!-- a类型 -->
+    <block wx:elif="{{item.tag == 'a'}}">
+        <view bindtap="wxmlTagATap" class="wxml-inline {{item.attr.class}} wxml-a" data-src="{{item.attr.href}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml7" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+    <!-- video类型 -->
+    <block wx:elif="{{item.tag == 'video'}}">
+        <template is="wxmlVideo" data="{{item:item}}" />
+    </block>
+    <!-- audio类型 -->
+    <block wx:elif="{{item.tag == 'audio'}}">
+        <template is="wxmlAudio" data="{{item:item}}" />
+    </block>
+    <!-- img类型 -->
+    <block wx:elif="{{item.tag == 'img'}}">
+        <template is="wxmlImg" data="{{images:images, item:item}}" />
+    </block>
+    <!-- 纯文本类型 -->
+    <block wx:elif="{{item.tag == '#text'}}">
+        <text>{{item.text}}</text>
+    </block>
+    <block wx:elif="{{item.tag == 'br'}}">
+        <text>\n</text>
+    </block>
+    <!-- 其他类型 -->
+    <block wx:else>
+        <view class="{{item.attr.class}} wxml-{{item.tag}} wxml-{{item.type}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml7" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+</template>
+
+<!-- 循环模版 -->
+
+<template name="wxml7">
+    <!-- button 类型 -->
+    <block wx:if="{{item.tag == 'button'}}">
+        <button type="default" size="mini">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml8" data="{{images:images, item:item}}" />
+            </block>
+        </button>
+    </block>
+    <!-- ul类型 -->
+    <block wx:elif="{{item.tag == 'ul'}}">
+        <view class="{{item.attr.class}} wxml-ul wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml8" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'circle'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- ol类型 -->
+    <block wx:elif="{{item.tag == 'ol'}}">
+        <view class="{{item.attr.class}} wxml-ol wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml8" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'number'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- li类型 -->
+    <block wx:elif="{{item.tag == 'li'}}">
+        <view class="{{item.attr.class}} wxml-li" style="{{item.attr.style}}">
+            <template is="wxmlLiType" data="{{item:item, idx:item.idx, type:type}}" />
+            <view class="{{item.attr.class}} wxml-li-text">
+                <block wx:for="{{item.nodes}}" wx:key="">
+                    <template is="wxml8" data="{{images:images, item:item}}" />
+                </block>
+            </view>
+        </view>
+    </block>
+    <!-- a类型 -->
+    <block wx:elif="{{item.tag == 'a'}}">
+        <view bindtap="wxmlTagATap" class="wxml-inline {{item.attr.class}} wxml-a" data-src="{{item.attr.href}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml8" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+    <!-- video类型 -->
+    <block wx:elif="{{item.tag == 'video'}}">
+        <template is="wxmlVideo" data="{{item:item}}" />
+    </block>
+    <!-- audio类型 -->
+    <block wx:elif="{{item.tag == 'audio'}}">
+        <template is="wxmlAudio" data="{{item:item}}" />
+    </block>
+    <!-- img类型 -->
+    <block wx:elif="{{item.tag == 'img'}}">
+        <template is="wxmlImg" data="{{images:images, item:item}}" />
+    </block>
+    <!-- 纯文本类型 -->
+    <block wx:elif="{{item.tag == '#text'}}">
+        <text>{{item.text}}</text>
+    </block>
+    <block wx:elif="{{item.tag == 'br'}}">
+        <text>\n</text>
+    </block>
+    <!-- 其他类型 -->
+    <block wx:else>
+        <view class="{{item.attr.class}} wxml-{{item.tag}} wxml-{{item.type}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml8" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+</template>
+
+<!-- 循环模版 -->
+
+<template name="wxml8">
+    <!-- button 类型 -->
+    <block wx:if="{{item.tag == 'button'}}">
+        <button type="default" size="mini">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml9" data="{{images:images, item:item}}" />
+            </block>
+        </button>
+    </block>
+    <!-- ul类型 -->
+    <block wx:elif="{{item.tag == 'ul'}}">
+        <view class="{{item.attr.class}} wxml-ul wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml9" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'circle'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- ol类型 -->
+    <block wx:elif="{{item.tag == 'ol'}}">
+        <view class="{{item.attr.class}} wxml-ol wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml9" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'number'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- li类型 -->
+    <block wx:elif="{{item.tag == 'li'}}">
+        <view class="{{item.attr.class}} wxml-li" style="{{item.attr.style}}">
+            <template is="wxmlLiType" data="{{item:item, idx:item.idx, type:type}}" />
+            <view class="{{item.attr.class}} wxml-li-text">
+                <block wx:for="{{item.nodes}}" wx:key="">
+                    <template is="wxml9" data="{{images:images, item:item}}" />
+                </block>
+            </view>
+        </view>
+    </block>
+    <!-- a类型 -->
+    <block wx:elif="{{item.tag == 'a'}}">
+        <view bindtap="wxmlTagATap" class="wxml-inline {{item.attr.class}} wxml-a" data-src="{{item.attr.href}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml9" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+    <!-- video类型 -->
+    <block wx:elif="{{item.tag == 'video'}}">
+        <template is="wxmlVideo" data="{{item:item}}" />
+    </block>
+    <!-- audio类型 -->
+    <block wx:elif="{{item.tag == 'audio'}}">
+        <template is="wxmlAudio" data="{{item:item}}" />
+    </block>
+    <!-- img类型 -->
+    <block wx:elif="{{item.tag == 'img'}}">
+        <template is="wxmlImg" data="{{images:images, item:item}}" />
+    </block>
+    <!-- 纯文本类型 -->
+    <block wx:elif="{{item.tag == '#text'}}">
+        <text>{{item.text}}</text>
+    </block>
+    <block wx:elif="{{item.tag == 'br'}}">
+        <text>\n</text>
+    </block>
+    <!-- 其他类型 -->
+    <block wx:else>
+        <view class="{{item.attr.class}} wxml-{{item.tag}} wxml-{{item.type}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml9" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+</template>
+
+<!-- 循环模版 -->
+
+<template name="wxml9">
+    <!-- button 类型 -->
+    <block wx:if="{{item.tag == 'button'}}">
+        <button type="default" size="mini">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml10" data="{{images:images, item:item}}" />
+            </block>
+        </button>
+    </block>
+    <!-- ul类型 -->
+    <block wx:elif="{{item.tag == 'ul'}}">
+        <view class="{{item.attr.class}} wxml-ul wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml10" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'circle'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- ol类型 -->
+    <block wx:elif="{{item.tag == 'ol'}}">
+        <view class="{{item.attr.class}} wxml-ol wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml10" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'number'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- li类型 -->
+    <block wx:elif="{{item.tag == 'li'}}">
+        <view class="{{item.attr.class}} wxml-li" style="{{item.attr.style}}">
+            <template is="wxmlLiType" data="{{item:item, idx:item.idx, type:type}}" />
+            <view class="{{item.attr.class}} wxml-li-text">
+                <block wx:for="{{item.nodes}}" wx:key="">
+                    <template is="wxml10" data="{{images:images, item:item}}" />
+                </block>
+            </view>
+        </view>
+    </block>
+    <!-- a类型 -->
+    <block wx:elif="{{item.tag == 'a'}}">
+        <view bindtap="wxmlTagATap" class="wxml-inline {{item.attr.class}} wxml-a" data-src="{{item.attr.href}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml10" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+    <!-- video类型 -->
+    <block wx:elif="{{item.tag == 'video'}}">
+        <template is="wxmlVideo" data="{{item:item}}" />
+    </block>
+    <!-- audio类型 -->
+    <block wx:elif="{{item.tag == 'audio'}}">
+        <template is="wxmlAudio" data="{{item:item}}" />
+    </block>
+    <!-- img类型 -->
+    <block wx:elif="{{item.tag == 'img'}}">
+        <template is="wxmlImg" data="{{images:images, item:item}}" />
+    </block>
+    <!-- 纯文本类型 -->
+    <block wx:elif="{{item.tag == '#text'}}">
+        <text>{{item.text}}</text>
+    </block>
+    <block wx:elif="{{item.tag == 'br'}}">
+        <text>\n</text>
+    </block>
+    <!-- 其他类型 -->
+    <block wx:else>
+        <view class="{{item.attr.class}} wxml-{{item.tag}} wxml-{{item.type}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml10" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+</template>
+
+<!-- 循环模版 -->
+
+<template name="wxml10">
+    <!-- button 类型 -->
+    <block wx:if="{{item.tag == 'button'}}">
+        <button type="default" size="mini">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml11" data="{{images:images, item:item}}" />
+            </block>
+        </button>
+    </block>
+    <!-- ul类型 -->
+    <block wx:elif="{{item.tag == 'ul'}}">
+        <view class="{{item.attr.class}} wxml-ul wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml11" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'circle'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- ol类型 -->
+    <block wx:elif="{{item.tag == 'ol'}}">
+        <view class="{{item.attr.class}} wxml-ol wxml-block" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml11" data="{{images:images, item:item, type:item.listtype != undefined ? item.listtype : 'number'}}" />
+            </block>
+        </view>
+    </block>
+    <!-- li类型 -->
+    <block wx:elif="{{item.tag == 'li'}}">
+        <view class="{{item.attr.class}} wxml-li" style="{{item.attr.style}}">
+            <template is="wxmlLiType" data="{{item:item, idx:item.idx, type:type}}" />
+            <view class="{{item.attr.class}} wxml-li-text">
+                <block wx:for="{{item.nodes}}" wx:key="">
+                    <template is="wxml11" data="{{images:images, item:item}}" />
+                </block>
+            </view>
+        </view>
+    </block>
+    <!-- a类型 -->
+    <block wx:elif="{{item.tag == 'a'}}">
+        <view bindtap="wxmlTagATap" class="wxml-inline {{item.attr.class}} wxml-a" data-src="{{item.attr.href}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml11" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+    <!-- video类型 -->
+    <block wx:elif="{{item.tag == 'video'}}">
+        <template is="wxmlVideo" data="{{item:item}}" />
+    </block>
+    <!-- audio类型 -->
+    <block wx:elif="{{item.tag == 'audio'}}">
+        <template is="wxmlAudio" data="{{item:item}}" />
+    </block>
+    <!-- img类型 -->
+    <block wx:elif="{{item.tag == 'img'}}">
+        <template is="wxmlImg" data="{{images:images, item:item}}" />
+    </block>
+    <!-- 纯文本类型 -->
+    <block wx:elif="{{item.tag == '#text'}}">
+        <text>{{item.text}}</text>
+    </block>
+    <block wx:elif="{{item.tag == 'br'}}">
+        <text>\n</text>
+    </block>
+    <!-- 其他类型 -->
+    <block wx:else>
+        <view class="{{item.attr.class}} wxml-{{item.tag}} wxml-{{item.type}}" style="{{item.attr.style}}">
+            <block wx:for="{{item.nodes}}" wx:key="">
+                <template is="wxml11" data="{{images:images, item:item}}" />
+            </block>
+        </view>
+    </block>
+</template>

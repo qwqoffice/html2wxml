@@ -1,0 +1,2 @@
+<import src="/html2wxml/html2wxml.wxml" />
+<template is="html2wxml" data="{{wxmlData:article}}" />

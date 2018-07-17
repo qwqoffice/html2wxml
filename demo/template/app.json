@@ -1,0 +1,11 @@
+{
+	"pages": [
+		"pages/index/index"
+	],
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#000",
+		"navigationBarTitleText": "html2wxml 微信小程序富文本组件",
+		"navigationBarTextStyle": "white"
+	}
+}

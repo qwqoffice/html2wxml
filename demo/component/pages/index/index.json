@@ -1,0 +1,6 @@
+{
+	"enablePullDownRefresh": true,
+	"usingComponents": {
+		"htmltowxml": "/components/html2wxml/html2wxml"
+	}
+}

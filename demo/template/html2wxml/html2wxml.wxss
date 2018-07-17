@@ -1,0 +1,315 @@
+/**
+ * Project: html2wxml
+ * Description: 将HTML、Markdown转为微信小程序WXML 
+ * Author: 幻想小籽
+ * Organization: QwqOffice (https://www.qwqoffice.com)
+ */
+
+.html2wxml {
+    padding: 0 5px;
+    font-family: inherit;
+    font-size: 32rpx;
+    color: #666;
+    line-height: 1.6;
+}
+
+view {
+    word-break: break-all;
+    overflow: auto;
+}
+
+.wxml-inline {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.wxml-block {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.wxml-div {
+    margin: 0;
+    padding: 0;
+}
+
+.wxml-p {
+    margin-bottom: 8px;
+}
+
+.wxml-h1 {
+    font-size: 38rpx;
+    font-weight: 400;
+    margin-bottom: 0.9em;
+}
+
+.wxml-h2 {
+    font-size: 36rpx;
+    font-weight: 400;
+    margin-bottom: 0.34em;
+}
+
+.wxml-h3 {
+    font-weight: 400;
+    font-size: 34rpx;
+    margin-bottom: 0.34em;
+}
+
+.wxml-h4 {
+    font-weight: 400;
+    font-size: 32rpx;
+    margin-bottom: 0.24em;
+}
+
+.wxml-h5 {
+    font-weight: 400;
+    font-size: 30rpx;
+    margin-bottom: 0.14em;
+}
+
+.wxml-h6 {
+    font-weight: 400;
+    font-size: 28rpx;
+    margin-bottom: 0.04em;
+}
+
+.wxml-h1, .wxml-h2, .wxml-h3, .wxml-h4, .wxml-h5, .wxml-h6, .wxml-b,
+.wxml-strong {
+    font-weight: bolder;
+}
+
+.wxml-i, .wxml-cite, .wxml-em, .wxml-var, .wxml-address {
+    font-style: italic;
+}
+
+.wxml-pre, .wxml-tt, .wxml-code, .wxml-kbd, .wxml-samp {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.wxml-pre {
+    font-size: 80%;
+    white-space: pre;
+    padding: 10px;
+    background: #fafafa;
+    border: 1px solid #ececec;
+    border-radius: 6px;
+}
+
+/* 带行号语法高亮样式 */
+
+.wxml-pre > .wxml-ol, .wxml-pre > .wxml-ol > .wxml-li,
+.wxml-pre > .wxml-ol > .wxml-li > .wxml-li-text {
+    overflow: visible;
+}
+
+.wxml-pre > .wxml-ol > .wxml-li > .wxml-li-text,
+.wxml-pre > .wxml-ol > .wxml-li > .wxml-li-type {
+    height: auto;
+    line-height: 1.6;
+}
+
+.wxml-pre > .wxml-ol > .wxml-li > .wxml-li-type {
+    color: #096;
+}
+
+.wxml-kbd {
+    padding: 0.1em 0.6em;
+    border: 1px solid #ccc;
+    font-size: 80%;
+    background-color: #f7f7f7;
+    color: #333;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    margin: 0 0.1em;
+    text-shadow: 0 1px 0 #fff;
+}
+
+.wxml-code {
+    line-height: 1.4;
+    border: 1px solid #e1e1e8;
+    padding: 2px 4px;
+    font-size: 80%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+}
+
+.wxml-big {
+    font-size: 1.17em;
+}
+
+.wxml-small, .wxml-sub, .wxml-sup {
+    font-size: 0.83em;
+}
+
+.wxml-sub {
+    vertical-align: sub;
+}
+
+.wxml-sup {
+    vertical-align: super;
+}
+
+.wxml-s, .wxml-strike, .wxml-del {
+    text-decoration: line-through;
+}
+
+.wxml-a {
+    color: deepskyblue;
+    word-break: break-all;
+    overflow: auto;
+}
+
+.wxml-video, wxml-audio {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.wxml-video video, .wxml-audio audio {
+    width: 100%;
+}
+
+.wxml-img {
+    background-color: #efefef;
+    overflow: hidden;
+}
+
+.wxml-blockquote {
+    margin: 0;
+    padding: 5px 10px;
+    font-size: 28rpx;
+    line-height: 1.4;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    background: #f5f5f5;
+    border-left: 3px solid #dbdbdb;
+}
+
+.wxml-u, .wxml-ins {
+    text-decoration: underline;
+}
+
+.wxml-figure {
+    overflow: hidden;
+}
+
+.wxml-hr {
+    unicode-bidi: isolate;
+    margin: 5px 0;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+
+.wxml-hide {
+    display: none;
+}
+
+/* 列表 */
+
+.wxml-ul, .wxml-ol {
+    margin: 15rpx 10rpx;
+}
+
+.wxml-li {
+    display: flex;
+    align-items: flex-start;
+    margin: 10rpx 0;
+}
+
+.wxml-li-text {
+    align-items: center;
+    line-height: 20px;
+}
+
+.wxml-li-type {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 5px;
+    height: 20px;
+    white-space: pre;
+    overflow: hidden;
+}
+
+.wxml-li-circle {
+    display: inline-flex;
+    width: 4px;
+    height: 4px;
+    background-color: #555;
+    border-radius: 50%;
+}
+
+.wxml-li-square {
+    display: inline-flex;
+    width: 10rpx;
+    height: 10rpx;
+    background-color: #333;
+    margin-right: 5px;
+}
+
+.wxml-li-ring {
+    display: inline-flex;
+    width: 10rpx;
+    height: 10rpx;
+    border: 2rpx solid #333;
+    border-radius: 50%;
+    background-color: #fff;
+    margin-right: 5px;
+}
+
+.wxml-ol > .wxml-li {
+    display: table-row;
+    margin: 0;
+}
+
+.wxml-ol > .wxml-li > .wxml-li-text, .wxml-ol > .wxml-li > .wxml-li-type {
+    display: table-cell;
+}
+
+.wxml-ol > .wxml-li > .wxml-li-type > view {
+    text-align: right;
+}
+
+/* 表格 */
+
+.wxml-table {
+    /*display: table;*/
+    width: 100%;
+    max-width: 100%;
+}
+
+.wxml-tr {
+    display: table-row;
+    /*border-top: 1px solid #e0e0e0;*/
+}
+
+.wxml-thead {
+    display: table-header-group;
+}
+
+.wxml-tbody {
+    display: table-row-group;
+}
+
+.wxml-th {
+    text-align: center;
+    font-weight: bold;
+    background: #f0f0f0;
+    border-top: 1px solid #e0e0e0;
+}
+
+.wxml-th, .wxml-td {
+    display: table-cell;
+    padding: 5px;
+    font-size: 28rpx;
+    border-left: 1px solid #e0e0e0;
+    word-break: break-all;
+    white-space: nowrap;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.wxml-td:last-child, .wxml-th:last-child {
+    border-right: 1px solid #e0e0e0;
+}

@@ -1,0 +1,79 @@
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+
+/* Tomorrow Comment */
+
+.hljs-style-tomorrow .hljs-comment,
+.hljs-style-tomorrow .hljs-quote {
+    color: #8e908c;
+}
+
+/* Tomorrow Red */
+
+.hljs-style-tomorrow .hljs-variable,
+.hljs-style-tomorrow .hljs-template-variable,
+.hljs-style-tomorrow .hljs-tag,
+.hljs-style-tomorrow .hljs-name,
+.hljs-style-tomorrow .hljs-selector-id,
+.hljs-style-tomorrow .hljs-selector-class,
+.hljs-style-tomorrow .hljs-regexp,
+.hljs-style-tomorrow .hljs-deletion {
+    color: #c82829;
+}
+
+/* Tomorrow Orange */
+
+.hljs-style-tomorrow .hljs-number,
+.hljs-style-tomorrow .hljs-built_in,
+.hljs-style-tomorrow .hljs-builtin-name,
+.hljs-style-tomorrow .hljs-literal,
+.hljs-style-tomorrow .hljs-type,
+.hljs-style-tomorrow .hljs-params,
+.hljs-style-tomorrow .hljs-meta,
+.hljs-style-tomorrow .hljs-link {
+    color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+
+.hljs-style-tomorrow .hljs-attribute {
+    color: #eab700;
+}
+
+/* Tomorrow Green */
+
+.hljs-style-tomorrow .hljs-string,
+.hljs-style-tomorrow .hljs-symbol,
+.hljs-style-tomorrow .hljs-bullet,
+.hljs-style-tomorrow .hljs-addition {
+    color: #718c00;
+}
+
+/* Tomorrow Blue */
+
+.hljs-style-tomorrow .hljs-title,
+.hljs-style-tomorrow .hljs-section {
+    color: #4271ae;
+}
+
+/* Tomorrow Purple */
+
+.hljs-style-tomorrow .hljs-keyword,
+.hljs-style-tomorrow .hljs-selector-tag {
+    color: #8959a8;
+}
+
+.hljs-style-tomorrow .hljs {
+    display: block;
+    overflow-x: auto;
+    background: white;
+    color: #4d4d4c;
+    padding: 0.5em;
+}
+
+.hljs-style-tomorrow .hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-style-tomorrow .hljs-strong {
+    font-weight: bold;
+}

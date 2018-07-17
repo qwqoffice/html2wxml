@@ -1,0 +1,77 @@
+/*
+
+Dracula Theme v1.2.0
+
+https://github.com/zenorocha/dracula-theme
+
+Copyright 2015, All rights reserved
+
+Code licensed under the MIT license
+http://zenorocha.mit-license.org
+
+@author Éverton Ribeiro <nuxlli@gmail.com>
+@author Zeno Rocha <hi@zenorocha.com>
+
+*/
+
+.hljs-style-dracula .hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #282a36;
+}
+
+.hljs-style-dracula .hljs-keyword,
+.hljs-style-dracula .hljs-selector-tag,
+.hljs-style-dracula .hljs-literal,
+.hljs-style-dracula .hljs-section,
+.hljs-style-dracula .hljs-link {
+  color: #8be9fd;
+}
+
+.hljs-style-dracula .hljs-function
+.hljs-style-dracula .hljs-keyword {
+  color: #ff79c6;
+}
+
+.hljs-style-dracula .hljs,
+.hljs-style-dracula .hljs-subst {
+  color: #f8f8f2;
+}
+
+.hljs-style-dracula .hljs-string,
+.hljs-style-dracula .hljs-title,
+.hljs-style-dracula .hljs-name,
+.hljs-style-dracula .hljs-type,
+.hljs-style-dracula .hljs-attribute,
+.hljs-style-dracula .hljs-symbol,
+.hljs-style-dracula .hljs-bullet,
+.hljs-style-dracula .hljs-addition,
+.hljs-style-dracula .hljs-variable,
+.hljs-style-dracula .hljs-template-tag,
+.hljs-style-dracula .hljs-template-variable {
+  color: #f1fa8c;
+}
+
+.hljs-style-dracula .hljs-comment,
+.hljs-style-dracula .hljs-quote,
+.hljs-style-dracula .hljs-deletion,
+.hljs-style-dracula .hljs-meta {
+  color: #6272a4;
+}
+
+.hljs-style-dracula .hljs-keyword,
+.hljs-style-dracula .hljs-selector-tag,
+.hljs-style-dracula .hljs-literal,
+.hljs-style-dracula .hljs-title,
+.hljs-style-dracula .hljs-section,
+.hljs-style-dracula .hljs-doctag,
+.hljs-style-dracula .hljs-type,
+.hljs-style-dracula .hljs-name,
+.hljs-style-dracula .hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-style-dracula .hljs-emphasis {
+  font-style: italic;
+}
