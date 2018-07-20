@@ -83,7 +83,7 @@ class ToWXML {
 		@$dom->loadHTML( $html );
 		$dom->encoding = 'UTF-8';
 		$json = $this->element2array( $dom->documentElement, $remove_line_break );
-		return $json['nodes'][0]['nodes'];
+		return isset( $json['nodes'][0]['nodes'] ) ? $json['nodes'][0]['nodes'] : array();
 	}
 
 	public function element2array( $element, $remove_line_break = true ) {

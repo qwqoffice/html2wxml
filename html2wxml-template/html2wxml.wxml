@@ -20,7 +20,7 @@
 </template>
 
 <template name="wxmlImg">
-    <image class="{{item.attr.class}} wxml-img" data-src="{{item.attr.src}}" src="{{item.attr.src}}" data-from="{{bind}}" data-idx="{{item.idx}}" bindload="wxmlImgLoad" bindtap="wxmlImgTap" mode="widthFix" style="width:{{images[item.idx].width}}px;" />
+    <image class="{{item.attr.class}} wxml-img" data-src="{{item.attr.src}}" src="{{item.attr.src}}" data-from="{{bind}}" data-idx="{{item.idx}}" bindload="wxmlImgLoad" bindtap="wxmlImgTap" mode="widthFix" style="width:{{images[item.idx].width}}px;{{item.attr.style}}" />
 </template>
 
 <template name="wxmlLiType">
