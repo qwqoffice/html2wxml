@@ -58,9 +58,10 @@
     line-height: 1.6;
 }
 
-view {
+.html2wxml view {
     word-break: break-all;
     overflow: auto;
+    max-width: 100%;
 }
 
 .wxml-inline {
@@ -219,6 +220,8 @@ view {
 .wxml-img {
     background-color: #efefef;
     overflow: hidden;
+	max-width: 100%;
+	margin: 0 auto;
 }
 
 .wxml-blockquote {

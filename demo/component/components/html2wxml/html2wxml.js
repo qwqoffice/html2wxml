@@ -2,6 +2,9 @@ var html2wxml = require('html2wxml-main.js');
 
 Component({
     data: {},
+    options: {
+        addGlobalClass: true
+    },
     properties: {
         text: {
             type: String,
