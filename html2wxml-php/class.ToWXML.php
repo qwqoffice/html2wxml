@@ -4,6 +4,8 @@
  * Description: 将HTML、Markdown转为微信小程序WXML 
  * Author: 幻想小籽
  * Organization: QwqOffice (https://www.qwqoffice.com)
+ * Version: 1.1
+ * Date: 2018-11-14
  */
 
 class ToWXML {
@@ -66,7 +68,7 @@ class ToWXML {
 	public function html2json( $html ) {
 		
 		$return = $this->html2array( '<body>' . $html . '</body>' );
-		return $this->args['encode'] ? json_encode( $return, JSON_UNESCAPED_UNICODE ) : $return;
+		return $this->args['encode'] ? json_encode( $return, JSON_UNESCAPED_UNICODE |JSON_PRETTY_PRINT) : $return;
 	}
 	
 	public function markdown2json( $text ) {
@@ -79,10 +81,10 @@ class ToWXML {
 			
 		$html = mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' );
 		
-		$dom = new DOMDocument();
-		@$dom->loadHTML( $html );
-		$dom->encoding = 'UTF-8';
-		$json = $this->element2array( $dom->documentElement, $remove_line_break );
+		$this->dom = new DOMDocument();
+		@$this->dom->loadHTML( $html );
+		$this->dom->encoding = 'UTF-8';
+		$json = $this->element2array( $this->dom->documentElement, $remove_line_break );
 		return isset( $json['nodes'][0]['nodes'] ) ? $json['nodes'][0]['nodes'] : array();
 	}
 
@@ -122,20 +124,19 @@ class ToWXML {
 		}
 		elseif( $tag == 'pre' ) {
 			
-			if( $this->args['highlight'] === true || $this->args['linenums'] === true ) {
+			if( $this->args['highlight'] == true || $this->args['linenums'] == true ) {
 				
-				$code = $element->childNodes[0]->textContent;
+				$code = $element->textContent;
 				
-				if( $this->args['highlight'] === true ) {
+				if( $this->args['highlight'] == true ) {
 					
 					$obj['attr']['class'] = isset( $obj['attr']['class'] ) ? $obj['attr']['class'] . ' hljs' : 'hljs';
 					$r = $this->highlight->highlightAuto( $code );
 					$code = $r->value;
 				}
 				
-				if( $this->args['linenums'] === true ) {
-					
-					$code = '<ol><li>' . str_replace( "\n", '</li><li>', $code ) . '</li></ol>';
+				if( $this->args['linenums'] == true ) {
+					$code = '<ol><li>' . preg_replace( '/\n/', '</li><li>', $code ) . '</li></ol>';
 				}
 				
 				$obj['nodes'] = $this->html2array( '<body>' . $code . '</body>', false );
@@ -163,7 +164,7 @@ class ToWXML {
 			
 			if( $sub_element->nodeType == XML_TEXT_NODE ) {
 
-				$text = $remove_line_break && $tag != 'pre' ? str_replace( array( "\n", "\r" ), array( '', '' ), $sub_element->wholeText ) : $sub_element->wholeText;
+				$text = $remove_line_break && $tag != 'pre' ? preg_replace( '/\n|\r/', '', $sub_element->wholeText ) : $sub_element->wholeText;
 				
 				if( $tag == 'ol' || $tag == 'ul' ) {
 					$text = trim( $text );
@@ -178,7 +179,7 @@ class ToWXML {
 			}
 			elseif( $sub_element->nodeType == XML_CDATA_SECTION_NODE ) {
 				
-				$text = $remove_line_break && $tag != 'pre' ? str_replace( array( "\n", "\r" ), array( '', '' ), $sub_element->data ) : $sub_element->data;
+				$text = $remove_line_break && $tag != 'pre' ? preg_replace( '/\n|\r/', '', $sub_element->data ) : $sub_element->data;
 				
 				$obj['nodes'][] = array(
 					'tag' => '#text',
