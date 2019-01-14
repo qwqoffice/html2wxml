@@ -2,6 +2,10 @@
 
 # html2wxml微信小程序富文本组件
 
+## 申请使用注意事项
+
+**插件版本解析服务是由 `QwqOffice` 完成，存在不稳定因素，如对稳定性有很高的要求，请自行搭建解析服务，或在自家服务器上直接完成解析。对于有关插件版本不能使用/不能解析的提问，不作任何回答**
+
 ## 效果
 
 ![html2wxml截图](https://www.qwqoffice.com/html2wxml/images/html2wxml-screenshot.png "html2wxml截图")
