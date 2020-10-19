@@ -25,7 +25,7 @@ Component({
                     }
 
                     wx.request({
-                        url: 'https://www.qwqoffice.com/html2wxml/',
+                        url: 'https://html2wxml.qwqoffice.com/api/',
                         data: data,
                         method: 'POST',
                         header: {
